@@ -1,0 +1,13 @@
+{
+  "author": "Dan Williams <me@deedubs.com> (http://deedubs.com/)",
+  "name": "robe",
+  "description": "A tiny wrapper for monk",
+  "version": "0.0.1",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
