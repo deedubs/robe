@@ -1,4 +1,6 @@
-var monk;
+var debug = require('debug')('robe')
+  , monkManager = require('monk')
+  , monk;
 
 function Robe (collectionName) {
   this.collection = monk.get(collectionName);
@@ -25,20 +27,16 @@ Robe.prototype.insert = function(attrs, callback) {
   this.collection.insert(attrs, callback);
 }
 
-Robe.prototype.byId = function (id, options, callback) {
+Robe.prototype.byId = function (id, callback) {
   if (!id) {
     return callback(new Error('Id must be supplied'));
   }
 
-  if(typeof(options) === 'function') {
-    callback = options;
-    options = {};
-  }
-
-  this.collection.findById({}, callback);
+  this.collection.findById(id, callback);
 }
 
 module.exports = function (mongoUrlString) {
-  monk = require('monk')(mongoUrlString)
+  monk = monkManager(mongoUrlString);
+
   return Robe;
 }

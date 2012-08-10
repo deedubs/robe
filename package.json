@@ -4,7 +4,9 @@
   "description": "A thin wrapper for monk",
   "version": "0.0.1",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "debug": "~0.7.0"
+  },
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {
