@@ -21,6 +21,10 @@ Robe.prototype.findOne = function(query, callback) {
   this.collection.findOne(query, callback);
 }
 
+Robe.prototype.insert = function(attrs, callback) {
+  this.collection.insert(attrs, callback);
+}
+
 Robe.prototype.byId = function (id, options, callback) {
   if (!id) {
     return callback(new Error('Id must be supplied'));
