@@ -7,33 +7,32 @@ function Robe (collectionName) {
 }
 
 Robe.prototype.all = function (options, callback) {
-  if(typeof(options) === 'function') {
-    callback = options;
-    options = {};
-  }
-
-  this.collection.find({}, callback);
+  this.collection.find.apply(this.collection, arguments);
 }
 
-Robe.prototype.find = function(query, callback) {
-  this.collection.find(query, callback);
-}
+Robe.prototype.find = Robe.prototype.all
 
 Robe.prototype.findOne = function(query, callback) {
   this.collection.findOne(query, callback);
 }
 
-Robe.prototype.insert = function(attrs, callback) {
-  this.collection.insert(attrs, callback);
-}
-
 Robe.prototype.save = function (attrs, callback) {
+  var robe = this;
+
   if(attrs._id) {
-    this.collection.updateById(attrs._id, attrs, callback);
+    var id = attrs._id;
+    delete attrs._id;
+
+    this.collection.updateById(id, attrs, function(err, model) {
+      attrs._id = id;
+      callback.apply(robe, arguments);
+    });
   } else {
     this.collection.insert(attrs, callback);
   }
 }
+
+Robe.prototype.insert = Robe.prototype.save;
 
 Robe.prototype.remove = function (object, callback) {
   this.collection.remove({_id: object._id}, callback);
@@ -46,6 +45,29 @@ Robe.prototype.byId = function (id, callback) {
 
   this.collection.findById(id, callback);
 }
+
+Robe.prototype.toJSON = function(attrs) {
+  if(typeof(attrs) == 'function') {
+    var wrappedFunction = attrs
+      , klass = this;
+
+    return function(err, model) {
+      wrappedFunction(err, model && klass.toJSON(model));
+    };
+  }
+
+  if (attrs) {
+    Object.keys(attrs).forEach(function(key) {
+      if (key.match(/^__/)) {
+        attrs[key] = true;
+      }
+    });
+  }
+
+  return attrs;
+}
+
+
 
 module.exports = function (mongoUrlString) {
   monk = monkManager(mongoUrlString);

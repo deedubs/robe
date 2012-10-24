@@ -1,12 +1,12 @@
 {
   "author": "Dan Williams <me@deedubs.com> (http://deedubs.com/)",
   "name": "robe",
-  "description": "A thin wrapper for monk",
-  "version": "0.0.5",
+  "description": "DON'T USE THIS YET! --A thin wrapper for monk",
+  "version": "0.0.12",
   "main": "index.js",
   "dependencies": {
     "debug": "~0.7.0",
-    "monk": "~0.2.1" 
+    "monk": "~0.2.1"
   },
   "devDependencies": {},
   "optionalDependencies": {},
